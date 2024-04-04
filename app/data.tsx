@@ -3,7 +3,7 @@ import {Box, IconButton, Paper, Slider, Stack, TextField, Tooltip, Typography} f
 import {Graph} from './graph'
 import {Distribution} from './distribution'
 import {Trend} from './trend'
-import {Replay, StopCircleOutlined} from '@mui/icons-material'
+import {ChevronLeft, ChevronRight, Replay, StopCircleOutlined} from '@mui/icons-material'
 import {Batch} from './batch'
 
 export type Data = {
@@ -33,10 +33,16 @@ export type ModelArgs = {
   connectionParams?: ConnectionParams
 }
 
+const MENU_WIDTH = 200
 const worker: {live?: Worker} = {}
 let animationFrame = -1
 export function Data() {
   const [network, setNetwork] = useState<Network>({epoch: 0, converged: false, data: [], links: []})
+  const [menuOpen, setMenuOpen] = useState(true)
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen)
+    setTimeout(() => dispatchEvent(new Event('resize')), 200)
+  }
 
   useEffect(() => {
     worker.live = new Worker(new URL('@/app/workers/liveWorker.ts', import.meta.url))
@@ -62,9 +68,20 @@ export function Data() {
         connectionParams,
       } as ModelArgs)
   }, [n, agentParams, valueParams, connectionParams])
+
   return (
     <>
-      <Stack sx={{position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, overflow: 'hidden'}}>
+      <Stack
+        sx={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: menuOpen ? MENU_WIDTH + 'px' : 0,
+          overflow: 'hidden',
+          transition: 'left 150ms',
+        }}
+      >
         <Box sx={{height: '65%'}}>
           <Graph data={network.data} links={network.links} />
         </Box>
@@ -72,36 +89,34 @@ export function Data() {
           <Distribution epoch={network.epoch} data={network.data} />
           <Trend epoch={network.epoch} data={network.data} />
         </Stack>
+        <Typography variant="h5" sx={{position: 'absolute', textAlign: 'center', width: '100%', top: 10}}>
+          Epoch: {network.epoch + (network.converged ? ', stagnant' : '')}
+        </Typography>
       </Stack>
-      <Typography variant="h5" sx={{position: 'absolute', textAlign: 'center', width: '100%', top: 10}}>
-        Epoch: {network.epoch + (network.converged ? ', stagnant' : '')}
-      </Typography>
       <Stack
         spacing={1}
-        sx={{position: 'fixed', maxWidth: '200px', p: 0.5, m: 1, '& .MuiSlider-markLabel': {fontSize: '.8em'}}}
+        sx={{
+          position: 'absolute',
+          width: MENU_WIDTH + 'px',
+          top: 0,
+          bottom: 0,
+          left: menuOpen ? 0 : -MENU_WIDTH + 'px',
+          mt: '40px',
+          p: 1,
+          transition: 'left 150ms',
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          '& .MuiSlider-markLabel': {fontSize: '.8em'},
+        }}
       >
         <Paper>
-          <Stack direction="row">
-            <TextField
-              value={n}
-              onChange={e => setN(+e.target.value || 100)}
-              label="Agents"
-              size="small"
-              type="number"
-            ></TextField>
-            <IconButton
-              aria-label="stop simulation"
-              onClick={() => worker.live && worker.live.postMessage({restart: true})}
-            >
-              <Replay />
-            </IconButton>
-            <IconButton
-              aria-label="stop simulation"
-              onClick={() => worker.live && worker.live.postMessage({stop: true})}
-            >
-              <StopCircleOutlined color="error" />
-            </IconButton>
-          </Stack>
+          <TextField
+            value={n}
+            onChange={e => setN(+e.target.value || 100)}
+            label="Agents"
+            size="small"
+            type="number"
+          ></TextField>
         </Paper>
         <Paper>
           <Typography>Graph</Typography>
@@ -183,7 +198,7 @@ export function Data() {
                 min={0.01}
                 max={1}
                 marks={[
-                  {value: 0, label: 0},
+                  {value: 0.01, label: '.1'},
                   {value: 1, label: 1},
                 ]}
                 onChange={(_, value) => {
@@ -239,6 +254,20 @@ export function Data() {
           </Tooltip>
         </Paper>
         <Batch />
+      </Stack>
+      <Stack sx={{width: menuOpen ? MENU_WIDTH + 'px' : '10px', justifyContent: 'space-between'}} direction="row">
+        <IconButton onClick={toggleMenu} sx={{width: 40}}>
+          {menuOpen ? <ChevronLeft /> : <ChevronRight />}
+        </IconButton>
+        <IconButton
+          aria-label="stop simulation"
+          onClick={() => worker.live && worker.live.postMessage({restart: true})}
+        >
+          <Replay />
+        </IconButton>
+        <IconButton aria-label="stop simulation" onClick={() => worker.live && worker.live.postMessage({stop: true})}>
+          <StopCircleOutlined color="error" />
+        </IconButton>
       </Stack>
     </>
   )

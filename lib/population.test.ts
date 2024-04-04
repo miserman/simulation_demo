@@ -28,6 +28,13 @@ describe('default population works', () => {
     }
     expect(passes).toBeTruthy()
   })
+  test('converges within 1000 epochs', async () => {
+    for (let i = 1000; i--; ) {
+      pop.step()
+      if (pop.converged) break
+    }
+    expect(pop.converged).toBeTruthy()
+  })
 })
 
 describe('population works with connection beta = 0', () => {

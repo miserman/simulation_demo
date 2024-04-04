@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.72% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/33</span>
+                <span class='fraction'>33/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85% </span>
+                <span class="strong">95% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>17/20</span>
+                <span class='fraction'>19/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.07% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/27</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -120,7 +120,7 @@
 <a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">117767x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -162,19 +162,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">231x</span>
+<span class="cline-any cline-yes">231x</span>
+<span class="cline-any cline-yes">23100x</span>
+<span class="cline-any cline-yes">23100x</span>
+<span class="cline-any cline-yes">23100x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">231x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Agent} from './agent'
 &nbsp;
-function <span class="fstat-no" title="function not covered" >byRandom(</span>) {
-<span class="cstat-no" title="statement not covered" >  return Math.random() - 0.5</span>
+function byRandom() {
+  return Math.random() - 0.5
 }
 &nbsp;
 export class Population {
@@ -215,14 +215,14 @@ export class Population {
   /**
    * Step all agents in a random order.
    */
-<span class="fstat-no" title="function not covered" >  step(</span>) {
-    let changed = <span class="cstat-no" title="statement not covered" >false</span>
-    ;<span class="cstat-no" title="statement not covered" >[...this.agents].sort(byRandom).forEach(<span class="fstat-no" title="function not covered" >agent </span>=&gt; {</span>
-      const initial = <span class="cstat-no" title="statement not covered" >agent.value</span>
-<span class="cstat-no" title="statement not covered" >      agent.step(this.agents)</span>
-<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (Math.abs(initial - agent.value) &gt; 1e-6) <span class="cstat-no" title="statement not covered" >changed = true</span></span>
+  step() {
+    let changed = false
+    ;[...this.agents].sort(byRandom).forEach(agent =&gt; {
+      const initial = agent.value
+      agent.step(this.agents)
+      if (Math.abs(initial - agent.value) &gt; 1e-6) changed = true
     })
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!changed) <span class="cstat-no" title="statement not covered" >this.converged = true</span></span>
+    if (!changed) this.converged = true
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -232,7 +232,7 @@ export class Population {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-03T16:35:14.594Z
+                at 2024-04-04T09:48:12.898Z
             </div>
         <script src="prettify.js"></script>
         <script>

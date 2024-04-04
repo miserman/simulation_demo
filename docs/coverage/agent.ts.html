@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.08% </span>
+                <span class="strong">95.65% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/46</span>
+                <span class='fraction'>44/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">95.83% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>21/24</span>
+                <span class='fraction'>23/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.8% </span>
+                <span class="strong">95.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/42</span>
+                <span class='fraction'>40/42</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -193,7 +193,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">203x</span>
-<span class="cline-any cline-yes">385x</span>
+<span class="cline-any cline-yes">368x</span>
 <span class="cline-any cline-yes">203x</span>
 <span class="cline-any cline-yes">203x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,13 +203,13 @@
 <span class="cline-any cline-yes">812x</span>
 <span class="cline-any cline-yes">812x</span>
 <span class="cline-any cline-yes">812x</span>
-<span class="cline-any cline-yes">370x</span>
-<span class="cline-any cline-yes">370x</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">362x</span>
+<span class="cline-any cline-yes">362x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">370x</span>
+<span class="cline-any cline-yes">362x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">442x</span>
+<span class="cline-any cline-yes">450x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">203x</span>
@@ -220,18 +220,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">23100x</span>
+<span class="cline-any cline-yes">23100x</span>
+<span class="cline-any cline-yes">23100x</span>
+<span class="cline-any cline-yes">92400x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">23100x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">23100x</span>
+<span class="cline-any cline-yes">23100x</span>
+<span class="cline-any cline-yes">22672x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">23100x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -306,19 +306,19 @@ export class Agent {
    * Process the agent's step.
    * @param agents Population of agents, referred to in Agent.connections.
    */
-<span class="fstat-no" title="function not covered" >  step(</span>agents: Agent[]) {
-    let mean = <span class="cstat-no" title="statement not covered" >0</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.connections.length) {</span>
-<span class="cstat-no" title="statement not covered" >      this.connections.forEach(<span class="fstat-no" title="function not covered" >i </span>=&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        mean += agents[i].value</span>
+  step(agents: Agent[]) {
+    let mean = 0
+    if (this.connections.length) {
+      this.connections.forEach(i =&gt; {
+        mean += agents[i].value
       })
-<span class="cstat-no" title="statement not covered" >      mean /= this.connections.length</span>
+      mean /= this.connections.length
     }
-    const dif = <span class="cstat-no" title="statement not covered" >mean - this.value</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (Math.abs(dif) &gt; this.tol) {</span>
-<span class="cstat-no" title="statement not covered" >      this.value += Math.max(-0.1, Math.min(dif, 0.1))</span>
+    const dif = mean - this.value
+    if (Math.abs(dif) &gt; this.tol) {
+      this.value += Math.max(-0.1, Math.min(dif, 0.1))
     }
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.errorProp) {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.errorProp) {
       const newValue = <span class="cstat-no" title="statement not covered" >this.valueParams.base + gamma(this.valueParams.alpha, this.valueParams.beta)</span>
 <span class="cstat-no" title="statement not covered" >      this.value += this.errorProp * (newValue - this.value)</span>
     }
@@ -331,7 +331,7 @@ export class Agent {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-03T16:35:14.594Z
+                at 2024-04-04T09:48:12.898Z
             </div>
         <script src="prettify.js"></script>
         <script>
