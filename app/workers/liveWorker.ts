@@ -6,6 +6,9 @@ let population = new Population()
 let interval: NodeJS.Timeout | number = -1
 let lastData: ModelArgs
 
+function symbolSize(value: number) {
+  return value * 0.35 + Math.pow(value * 0.01, 2)
+}
 addEventListener('message', (e: MessageEvent<ModelArgs | {stop: true} | {restart: true}>) => {
   clearInterval(interval)
   let action = e.data
@@ -30,7 +33,7 @@ addEventListener('message', (e: MessageEvent<ModelArgs | {stop: true} | {restart
         network.data.push({
           x: 0,
           y: 0,
-          symbolSize: agent.value,
+          symbolSize: symbolSize(agent.value),
           value: agent.value,
           name: agent.index,
           label: {show: false},
@@ -48,7 +51,8 @@ addEventListener('message', (e: MessageEvent<ModelArgs | {stop: true} | {restart
         })
       } else {
         const data = network.data[agent.index]
-        data.value = data.symbolSize = agent.value
+        data.value = agent.value
+        data.symbolSize = symbolSize(agent.value)
       }
     })
     if (initial) {

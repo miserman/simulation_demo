@@ -35,20 +35,24 @@ export type ModelArgs = {
 
 const MENU_WIDTH = 200
 const worker: {live?: Worker} = {}
-let animationFrame = -1
+const frames: {network: number; menu: number | NodeJS.Timeout} = {
+  network: -1,
+  menu: -1,
+}
 export function Data() {
   const [network, setNetwork] = useState<Network>({epoch: 0, converged: false, data: [], links: []})
   const [menuOpen, setMenuOpen] = useState(true)
   const toggleMenu = () => {
+    clearTimeout(frames.menu)
     setMenuOpen(!menuOpen)
-    setTimeout(() => dispatchEvent(new Event('resize')), 200)
+    setTimeout(() => clearTimeout(frames.menu), 500)
+    frames.menu = setInterval(() => dispatchEvent(new Event('resize')), 10)
   }
-
   useEffect(() => {
     worker.live = new Worker(new URL('@/app/workers/liveWorker.ts', import.meta.url))
     worker.live.onmessage = (e: MessageEvent<Network>) => {
-      cancelAnimationFrame(animationFrame)
-      animationFrame = requestAnimationFrame(() => setNetwork(e.data))
+      cancelAnimationFrame(frames.network)
+      frames.network = requestAnimationFrame(() => setNetwork(e.data))
     }
     return () => worker.live && worker.live.terminate()
   }, [])
@@ -79,7 +83,7 @@ export function Data() {
           bottom: 0,
           left: menuOpen ? MENU_WIDTH + 'px' : 0,
           overflow: 'hidden',
-          transition: 'left 150ms',
+          transition: 'left 300ms',
         }}
       >
         <Box sx={{height: '65%'}}>
@@ -103,7 +107,7 @@ export function Data() {
           left: menuOpen ? 0 : -MENU_WIDTH + 'px',
           mt: '40px',
           p: 1,
-          transition: 'left 150ms',
+          transition: 'left 300ms',
           overflowX: 'hidden',
           overflowY: 'auto',
           '& .MuiSlider-markLabel': {fontSize: '.8em'},

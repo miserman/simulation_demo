@@ -27,7 +27,7 @@ export function Distribution({epoch, data}: {epoch: number; data: Data[]}) {
       if (chart) {
         if (data.length) {
           const values = data.map(d => d.value)
-          const bins = makeBins([...values, ...initial])
+          const bins = makeBins([...values, ...initial], 0.5)
           if (epoch === 1 || initial.length === 0) {
             initial = values
           }
@@ -61,13 +61,13 @@ export function Distribution({epoch, data}: {epoch: number; data: Data[]}) {
                   name: 'current',
                   type: 'line',
                   areaStyle: {opacity: 0.4},
-                  data: density(bins, values),
+                  data: density(bins, values, 2),
                   symbol: 'none',
                 },
                 {
                   name: 'initial',
                   type: 'line',
-                  data: density(bins, initial),
+                  data: density(bins, initial, 2),
                   symbol: 'none',
                 },
               ],
