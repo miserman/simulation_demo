@@ -1,5 +1,16 @@
 import {useEffect, useState} from 'react'
-import {Box, IconButton, Paper, Slider, Stack, TextField, Tooltip, Typography} from '@mui/material'
+import {
+  Backdrop,
+  Box,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Slider,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import {Graph} from './graph'
 import {Distribution} from './distribution'
 import {Trend} from './trend'
@@ -22,15 +33,14 @@ export type Links = {
 }
 export type Network = {epoch: number; converged: boolean; data: Data[]; links: Links[]}
 
-type AgentParams = {tolerance?: number; errorProp?: number}
-type ValueParams = {base?: number; alpha?: number; beta?: number}
-type ConnectionParams = {k?: number; beta?: number}
+export type AgentParams = {tolerance?: number; errorProp?: number}
+export type ValueParams = {base?: number; alpha?: number; beta?: number}
+export type ConnectionParams = {k?: number; beta?: number}
 export type ModelArgs = {
   n: number
-  scale: {height: number; width: number}
-  agentParams?: AgentParams
-  valueParams?: ValueParams
-  connectionParams?: ConnectionParams
+  agentParams: AgentParams
+  valueParams: ValueParams
+  connectionParams: ConnectionParams
 }
 
 const MENU_WIDTH = 200
@@ -73,7 +83,7 @@ export function Data() {
       } as ModelArgs)
   }, [n, agentParams, valueParams, connectionParams])
 
-  return (
+  return worker.live ? (
     <>
       <Stack
         sx={{
@@ -259,7 +269,10 @@ export function Data() {
         </Paper>
         <Batch />
       </Stack>
-      <Stack sx={{width: menuOpen ? MENU_WIDTH + 'px' : '10px', justifyContent: 'space-between'}} direction="row">
+      <Stack
+        sx={{width: menuOpen ? MENU_WIDTH + 'px' : '10px', justifyContent: 'space-between', transition: 'width 300ms'}}
+        direction="row"
+      >
         <IconButton onClick={toggleMenu} sx={{width: 40}}>
           {menuOpen ? <ChevronLeft /> : <ChevronRight />}
         </IconButton>
@@ -274,5 +287,12 @@ export function Data() {
         </IconButton>
       </Stack>
     </>
+  ) : (
+    <Backdrop open={!worker.live}>
+      <Stack direction="column" sx={{textAlign: 'center'}}>
+        <Typography variant="h4">Initializing Live Worker</Typography>
+        <LinearProgress />
+      </Stack>
+    </Backdrop>
   )
 }
