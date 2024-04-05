@@ -71,7 +71,7 @@ function Distributions({data}: {data: ScatterSeriesOption[]}) {
       }
     }
   }, [data])
-  return <Box ref={container} sx={{pl: 1, pr: 1, pb: 0.5, height: 400, width: 1200, maxWidth: '100%'}} />
+  return <Box ref={container} sx={{height: 400, width: 1200, maxWidth: '100%'}} />
 }
 
 function Trends({variants, epochs, data}: {variants: string[]; epochs: number[]; data: LineSeriesOption[]}) {
@@ -134,7 +134,7 @@ function Trends({variants, epochs, data}: {variants: string[]; epochs: number[];
       }
     }
   }, [data, epochs, variants])
-  return <Box ref={container} sx={{p: 1, height: 400, width: 1200, maxWidth: '100%'}} />
+  return <Box ref={container} sx={{height: 400, width: 1200, maxWidth: '100%'}} />
 }
 
 export function BatchResultsDisplay({data, batches}: {data: {[index: string]: BatchResults}; batches: BatchArgs[]}) {

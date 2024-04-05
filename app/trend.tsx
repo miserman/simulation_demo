@@ -39,15 +39,16 @@ export function Trend({epoch, data}: {epoch: number; data: Data[]}) {
           summary.mean.push(mean)
           chart.setOption(
             {
-              backgroundColor: '#000',
+              color: '#d9ccff',
+              backgroundColor: '#00000000',
               animationDuration: 300,
-              grid: {top: 30, right: 30, bottom: 60},
+              grid: {top: 30, right: 30, bottom: 60, left: 60},
               tooltip: {
                 trigger: 'axis',
                 textStyle: {
                   color: '#fff',
                 },
-                backgroundColor: '#000',
+                backgroundColor: '#00000000',
                 borderWidth: 0,
                 valueFormatter: (value: number) => value.toFixed(2),
               },

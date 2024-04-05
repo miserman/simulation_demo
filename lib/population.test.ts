@@ -63,3 +63,18 @@ describe('population works with connection beta = 0', () => {
     expect(passes).toBeTruthy()
   })
 })
+
+describe('population works with errorProp', () => {
+  test('values are unchanged with infinite tolerance', async () => {
+    const pop = new Population(10, {tolerance: Infinity})
+    const initial = pop.agents.map(a => a.value)
+    pop.step()
+    expect(initial).toEqual(pop.agents.map(a => a.value))
+  })
+  test('error is added', async () => {
+    const pop = new Population(10, {tolerance: Infinity, errorProp: 1})
+    const initial = pop.agents.map(a => a.value)
+    pop.step()
+    expect(initial).not.toEqual(pop.agents.map(a => a.value))
+  })
+})

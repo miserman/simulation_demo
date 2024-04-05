@@ -122,9 +122,14 @@ function VariantMenu({
             }}
           ></TextField>
         </Stack>
-        <Button onClick={() => update({index, type: 'remove'})} color="error" disabled={onlyVariant}>
-          Remove
-        </Button>
+        <IconButton
+          onClick={() => update({index, type: 'remove'})}
+          aria-label="remove variant"
+          color="error"
+          disabled={onlyVariant}
+        >
+          <Close />
+        </IconButton>
       </Stack>
       <Stack direction="row" spacing={1}>
         <Stack spacing={1}>
@@ -290,14 +295,14 @@ export function Batch() {
       </Button>
       {menuOpen && (
         <Dialog open={menuOpen} onClose={toggleMenu}>
-          <DialogTitle>Batch Runner</DialogTitle>
+          <DialogTitle sx={{p: 1}}>Batch Runner</DialogTitle>
           <IconButton
             aria-label="close export menu"
             onClick={toggleMenu}
             sx={{
               position: 'absolute',
-              right: 8,
-              top: 12,
+              right: 5,
+              top: 5,
             }}
             className="close-button"
           >

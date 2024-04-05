@@ -273,7 +273,7 @@ export function Data() {
         sx={{width: menuOpen ? MENU_WIDTH + 'px' : '10px', justifyContent: 'space-between', transition: 'width 300ms'}}
         direction="row"
       >
-        <IconButton onClick={toggleMenu} sx={{width: 40}}>
+        <IconButton onClick={toggleMenu} sx={{width: 40}} aria-label="toggle menu">
           {menuOpen ? <ChevronLeft /> : <ChevronRight />}
         </IconButton>
         <IconButton

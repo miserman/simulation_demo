@@ -51,7 +51,7 @@ export function Graph({data, links}: {data: Data[]; links: Links[]}) {
                 borderWidth: 0,
                 valueFormatter: (value: number) => value.toFixed(2),
               },
-              backgroundColor: '#000',
+              backgroundColor: '#00000000',
               animationDuration: 300,
               series: [
                 {

@@ -33,9 +33,10 @@ export function Distribution({epoch, data}: {epoch: number; data: Data[]}) {
           }
           chart.setOption(
             {
-              backgroundColor: '#000',
+              color: ['#d9ccff', '#ffd9a7'],
+              backgroundColor: '#00000000',
               animationDuration: 300,
-              grid: {top: 30, right: 30, bottom: 60},
+              grid: {top: 30, right: 20, bottom: 60, left: 60},
               legend: {
                 left: 'right',
                 data: ['current', 'initial'],

@@ -4,7 +4,7 @@ import {StrictMode} from 'react'
 import {Data} from './data'
 
 const theme = createTheme({
-  palette: {mode: 'dark', primary: {main: '#b393d3'}, success: {main: '#4986cb'}, error: {main: '#e0561c'}},
+  palette: {mode: 'dark', background: {default: '#000'}, primary: {main: '#d9ccff'}},
 })
 
 export default function Home() {
