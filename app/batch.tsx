@@ -15,7 +15,9 @@ import {
 } from '@mui/material'
 import {useMemo, useReducer, useState} from 'react'
 import type {AgentParams, ConnectionParams, ModelArgs, ValueParams} from './data'
-import {BatchResultsDisplay} from './batchResults'
+import dynamic from 'next/dynamic'
+
+const BatchResultsDisplay = dynamic(() => import('./batchResults'))
 
 export type BatchArgs = ModelArgs & {name: string; color: string; runs: number; epochs: number}
 export type BatchResults = {means: number[]; initialValues: number[]; finalValues: number[]}[]
@@ -200,24 +202,48 @@ function VariantMenu({
         {agentParams ? (
           <Stack spacing={1}>
             <Typography>Agents</Typography>
-            <TextField
-              label="tolerance"
-              size="small"
-              type="number"
-              value={agentParams.tolerance}
-              onChange={e => {
-                update({index, key: 'tolerance', value: +e.target.value, component: 'agent'})
-              }}
-            ></TextField>
-            <TextField
-              label="error proportion"
-              size="small"
-              type="number"
-              value={agentParams.errorProp}
-              onChange={e => {
-                update({index, key: 'errorProp', value: +e.target.value, component: 'agent'})
-              }}
-            ></TextField>
+            <Stack spacing={1} direction="row">
+              <Stack spacing={1}>
+                <TextField
+                  label="tolerance"
+                  size="small"
+                  type="number"
+                  value={agentParams.tolerance}
+                  onChange={e => {
+                    update({index, key: 'tolerance', value: +e.target.value, component: 'agent'})
+                  }}
+                ></TextField>
+                <TextField
+                  label="stability"
+                  size="small"
+                  type="number"
+                  value={agentParams.stability}
+                  onChange={e => {
+                    update({index, key: 'stability', value: +e.target.value, component: 'agent'})
+                  }}
+                ></TextField>
+              </Stack>
+              <Stack spacing={1}>
+                <TextField
+                  label="mobility"
+                  size="small"
+                  type="number"
+                  value={agentParams.mobility}
+                  onChange={e => {
+                    update({index, key: 'mobility', value: +e.target.value, component: 'agent'})
+                  }}
+                ></TextField>
+                <TextField
+                  label="error proportion"
+                  size="small"
+                  type="number"
+                  value={agentParams.errorProp}
+                  onChange={e => {
+                    update({index, key: 'errorProp', value: +e.target.value, component: 'agent'})
+                  }}
+                ></TextField>
+              </Stack>
+            </Stack>
           </Stack>
         ) : (
           <></>
@@ -270,7 +296,7 @@ export function Batch() {
         runs: 10,
         epochs: 200,
         n: 100,
-        agentParams: {tolerance: 0, errorProp: 0},
+        agentParams: {tolerance: 0, stability: 0, mobility: 0, errorProp: 0},
         valueParams: {base: 15, alpha: 3, beta: 0.25},
         connectionParams: {k: 4, beta: 0.1},
       } as BatchArgs,

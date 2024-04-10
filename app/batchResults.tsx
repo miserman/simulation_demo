@@ -137,7 +137,13 @@ function Trends({variants, epochs, data}: {variants: string[]; epochs: number[];
   return <Box ref={container} sx={{height: 400, width: 1200, maxWidth: '100%'}} />
 }
 
-export function BatchResultsDisplay({data, batches}: {data: {[index: string]: BatchResults}; batches: BatchArgs[]}) {
+export default function BatchResultsDisplay({
+  data,
+  batches,
+}: {
+  data: {[index: string]: BatchResults}
+  batches: BatchArgs[]
+}) {
   const variants = Object.keys(data)
   const colors: {[index: string]: string} = {}
   let maxEpoch = -Infinity

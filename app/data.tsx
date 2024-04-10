@@ -33,7 +33,7 @@ export type Links = {
 }
 export type Network = {epoch: number; converged: boolean; data: Data[]; links: Links[]}
 
-export type AgentParams = {tolerance?: number; errorProp?: number}
+export type AgentParams = {tolerance?: number; stability?: number; mobility?: number; errorProp?: number}
 export type ValueParams = {base?: number; alpha?: number; beta?: number}
 export type ConnectionParams = {k?: number; beta?: number}
 export type ModelArgs = {
@@ -68,7 +68,7 @@ export function Data() {
   }, [])
 
   const [n, setN] = useState(100)
-  const [agentParams, setAgentParams] = useState<AgentParams>({tolerance: 0, errorProp: 0})
+  const [agentParams, setAgentParams] = useState<AgentParams>({tolerance: 0, stability: 0, mobility: 0, errorProp: 0})
   const [valueParams, setValueParams] = useState<ValueParams>({base: 15, alpha: 3, beta: 0.25})
   const [connectionParams, setConnectionParams] = useState<ConnectionParams>({k: 4, beta: 0.1})
 
@@ -96,10 +96,10 @@ export function Data() {
           transition: 'left 300ms',
         }}
       >
-        <Box sx={{height: '65%'}}>
+        <Box sx={{height: '70%'}}>
           <Graph data={network.data} links={network.links} />
         </Box>
-        <Stack direction="row" sx={{height: '35%'}}>
+        <Stack direction="row" sx={{height: '30%'}}>
           <Distribution epoch={network.epoch} data={network.data} />
           <Trend epoch={network.epoch} data={network.data} />
         </Stack>
@@ -241,6 +241,51 @@ export function Data() {
                 ]}
                 onChange={(_, value) => {
                   setAgentParams({...agentParams, tolerance: 'number' === typeof value ? value : value[0]})
+                }}
+              ></Slider>
+            </Box>
+          </Tooltip>
+          <Tooltip title="agent's tendency to stay at the same value; 1 = unable to change" placement="right">
+            <Box sx={{pr: 1.5, pl: 1.5}}>
+              <Typography variant="caption" id="agent-label-stab">
+                stability: {agentParams.stability}
+              </Typography>
+              <Slider
+                value={agentParams.stability}
+                aria-labelledby="agent-label-stab"
+                step={0.1}
+                min={0}
+                max={1}
+                marks={[
+                  {value: 0, label: 0},
+                  {value: 1, label: 1},
+                ]}
+                onChange={(_, value) => {
+                  setAgentParams({...agentParams, stability: 'number' === typeof value ? value : value[0]})
+                }}
+              ></Slider>
+            </Box>
+          </Tooltip>
+          <Tooltip
+            title="agent's chance to replace their least similar connection with their most similar secondary connection"
+            placement="right"
+          >
+            <Box sx={{pr: 1.5, pl: 1.5}}>
+              <Typography variant="caption" id="agent-label-mob">
+                mobility: {agentParams.mobility}
+              </Typography>
+              <Slider
+                value={agentParams.mobility}
+                aria-labelledby="agent-label-mob"
+                step={0.01}
+                min={0}
+                max={1}
+                marks={[
+                  {value: 0, label: 0},
+                  {value: 1, label: 1},
+                ]}
+                onChange={(_, value) => {
+                  setAgentParams({...agentParams, mobility: 'number' === typeof value ? value : value[0]})
                 }}
               ></Slider>
             </Box>

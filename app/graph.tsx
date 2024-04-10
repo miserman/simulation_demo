@@ -52,7 +52,7 @@ export function Graph({data, links}: {data: Data[]; links: Links[]}) {
                 valueFormatter: (value: number) => value.toFixed(2),
               },
               backgroundColor: '#00000000',
-              animationDuration: 300,
+              animation: false,
               series: [
                 {
                   type: 'graph',

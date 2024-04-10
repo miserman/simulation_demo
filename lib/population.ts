@@ -1,3 +1,4 @@
+import type {AgentParams, ConnectionParams, ValueParams} from '@/app/data'
 import {Agent} from './agent'
 
 function byRandom() {
@@ -16,13 +17,15 @@ export class Population {
    */
   constructor(
     n = 100,
-    agentParams?: {tolerance?: number; errorProp?: number},
-    valueParams?: {base?: number; alpha?: number; beta?: number},
-    connectionParams?: {k?: number; beta?: number}
+    agentParams?: Partial<AgentParams>,
+    valueParams?: Partial<ValueParams>,
+    connectionParams?: Partial<ConnectionParams>
   ) {
     this.agents = new Array(n)
     if (!agentParams) agentParams = {}
     const agentTol = agentParams.tolerance || 0
+    const agentStab = agentParams.stability || 0
+    const agentMob = agentParams.mobility || 0
     const agentError = agentParams.errorProp || 0
     if (!valueParams) valueParams = {}
     const valueBase = valueParams.base || 15
@@ -32,7 +35,7 @@ export class Population {
     const connK = connectionParams.k || 4
     const connBeta = 'beta' in connectionParams ? connectionParams.beta : 0.9
     for (let i = n; i--; ) {
-      const a = new Agent(i, agentTol, agentError)
+      const a = new Agent(i, agentTol, agentStab, agentMob, agentError)
       a.rollValue(valueBase, valueAlpha, valueBeta)
       a.rollConnections(n, connK, connBeta)
       this.agents[i] = a
@@ -47,7 +50,7 @@ export class Population {
     ;[...this.agents].sort(byRandom).forEach(agent => {
       const initial = agent.value
       agent.step(this.agents)
-      if (Math.abs(initial - agent.value) > 1e-6) changed = true
+      if (agent.stability === 1 || Math.abs(initial - agent.value) > 1e-6) changed = true
     })
     if (!changed) this.converged = true
   }

@@ -8,7 +8,7 @@ The [lib/population.ts](lib/population.ts) file runs the model by generating age
 
 ## Execution
 
-Models are run from two types of web workers. The primary worker ([app/workers/liveWorker.ts](app/workers/liveWorker.ts)) runs the live-running model. This executes population steps every 100 milliseconds, and sends the updated population to the app every 5 epochs. The batch worker ([app/workers/batchWorker.ts](app/workers/batchWorker.ts)) is spawned for each model variant from the batch runner. These run the variant without timing, collect population averages after each epoch, and send back these and the initial and final population values for each run.
+Models are run from two types of web workers. The primary worker ([app/workers/liveWorker.ts](app/workers/liveWorker.ts)) runs the live-running model. This executes population steps every 100 milliseconds, and sends the updated population to the app every epoch. The batch worker ([app/workers/batchWorker.ts](app/workers/batchWorker.ts)) is spawned for each model variant from the batch runner. These run the variant without timing, collect population averages after each epoch, and send back these and the initial and final population values for each run.
 
 # Analysis
 

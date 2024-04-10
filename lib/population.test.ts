@@ -78,3 +78,21 @@ describe('population works with errorProp', () => {
     expect(initial).not.toEqual(pop.agents.map(a => a.value))
   })
 })
+
+describe('population works with stability', () => {
+  test('values are unchanged with stability of 1', async () => {
+    const pop = new Population(10, {stability: 1})
+    const initial = pop.agents.map(a => a.value)
+    pop.step()
+    expect(initial).toEqual(pop.agents.map(a => a.value))
+  })
+})
+
+describe('population works with mobility', () => {
+  test('connections change with a mobility of 1', async () => {
+    const pop = new Population(10, {mobility: 1})
+    const initial = pop.agents.map(a => '' + a.connections)
+    pop.step()
+    expect(initial).not.toEqual(pop.agents.map(a => '' + a.connections))
+  })
+})
